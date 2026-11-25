@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Leelavati Hospital</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-icon">
+                <i class="fa-solid fa-hospital"></i>
+            </div>
+            <div class="sidebar-logo-text">
+                <h2 id="sidebarHospitalName">Leelavati</h2>
+                <span>Hospital Admin</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-title">Main</div>
+            <button class="nav-item active" data-tab="tab-dashboard">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Dashboard</span>
+            </button>
+            <button class="nav-item" data-tab="tab-appointments">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Appointments</span>
+                <span class="nav-badge badge-pending" id="sidebarPendingBadge">0</span>
+            </button>
+
+            <div class="nav-section-title">Website Content Tabs</div>
+            <button class="nav-item" data-tab="tab-brand">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Branding & Header</span>
+            </button>
+            <button class="nav-item" data-tab="tab-hero">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Hero Section</span>
+            </button>
+            <button class="nav-item" data-tab="tab-about">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About Hospital</span>
+            </button>
+            <button class="nav-item" data-tab="tab-services">
+                <i class="fa-solid fa-stethoscope"></i>
+                <span>Services & Specialties</span>
+            </button>
+            <button class="nav-item" data-tab="tab-why">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <span>Why Choose Us</span>
+            </button>
+            <button class="nav-item" data-tab="tab-doctors">
+                <i class="fa-solid fa-user-doctor"></i>
+                <span>Doctors Team</span>
+            </button>
+            <button class="nav-item" data-tab="tab-testimonials">
+                <i class="fa-solid fa-comment-dots"></i>
+                <span>Patient Testimonials</span>
+            </button>
+            <button class="nav-item" data-tab="tab-contact">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Contact & Footer</span>
+            </button>
+
+            <div class="nav-section-title">System</div>
+            <button class="nav-item" data-tab="tab-security">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>.env & Security</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="admin-profile">
+                <div class="admin-avatar" id="adminAvatarLetter">A</div>
+                <div class="admin-details">
+                    <span id="adminUsernameDisplay">Admin</span>
+                    <small>Authenticated (.env)</small>
+                </div>
+            </div>
+            <button class="btn-logout" id="btnLogout" title="Logout">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Topbar -->
+        <header class="admin-topbar">
+            <div class="topbar-left">
+                <button class="btn-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="topbar-title">
+                    <h1 id="currentTabTitle">Dashboard Overview</h1>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <a href="/" target="_blank" class="btn-topbar btn-site-preview">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    <span>Live Website</span>
+                </a>
+                <button class="btn-topbar btn-save-master" id="btnSaveMaster">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Save All Changes</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="admin-body">
+
+            <!-- =====================================
+                 TAB 1: DASHBOARD OVERVIEW
+            ====================================== -->
+            <section class="tab-panel active" id="tab-dashboard">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-chart-pie"></i> Hospital Operations Overview</h2>
+                        <p>Welcome back, Administrator. Real-time metrics and patient appointments.</p>
+                    </div>
+                    <div>
+                        <button class="btn-secondary" id="btnRefreshStats">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stat-cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon warning">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span>Pending Requests</span>
+                            <strong id="statPendingApts">0</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon primary">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span>Total Appointments</span>
+                            <strong id="statTotalApts">0</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fa-solid fa-stethoscope"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span>Specialties Active</span>
+                            <strong id="statServicesCount">8</strong>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon navy">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span>Medical Specialists</span>
+                            <strong id="statDoctorsCount">3</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Appointments Card -->
+                <div class="admin-card">
+                    <div class="card-title" style="justify-content: space-between;">
+                        <span><i class="fa-solid fa-bell"></i> Recent Patient Appointments</span>
+                        <button class="btn-secondary" style="font-size: 12px; padding: 6px 12px;" onclick="switchTab('tab-appointments')">
+                            View All <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Phone</th>
+                                    <th>Department</th>
+                                    <th>Requested Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentAppointmentsBody">
+                                <tr><td colspan="6" style="text-align:center; padding: 20px;">Loading appointments...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Tips Card -->
+                <div class="admin-card">
+                    <div class="card-title">
+                        <i class="fa-solid fa-server"></i> System Persistence &amp; Environment Configuration
+                    </div>
+                    <p style="font-size: 14px; line-height: 1.6; color: var(--text);">
+                        ✅ <strong>Permanent Storage:</strong> Every edit you save across any tab is immediately committed to disk in <code style="background:#eef5f6; padding:2px 6px; border-radius:4px;">data/site_content.json</code>. Restarting the server or rebooting the machine will preserve all changes forever.<br>
+                        🔑 <strong>.env Credentials:</strong> Admin login details are controlled directly by your <code style="background:#eef5f6; padding:2px 6px; border-radius:4px;">.env</code> file. If you ever forget your password, you can view or edit it in the <code style="background:#eef5f6; padding:2px 6px; border-radius:4px;">.env</code> file in Notepad.
+                    </p>
+                </div>
+
+                <!-- Site Visuals & Media Central Hub -->
+                <div class="admin-card">
+                    <div class="card-title" style="justify-content: space-between;">
+                        <span><i class="fa-solid fa-photo-film"></i> Site Visual Assets &amp; Media Central Hub</span>
+                        <small style="font-weight: 500; color: var(--text-muted);">Quick change &amp; preview across all sections</small>
+                    </div>
+                    <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">
+                        Manage, upload, update, and remove visuals used throughout the website from one place or through each individual tab.
+                    </p>
+                    <div class="media-hub-grid" id="dashboardMediaHub">
+                        <!-- Populated dynamically by admin.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 2: APPOINTMENTS MANAGER
+            ====================================== -->
+            <section class="tab-panel" id="tab-appointments">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-calendar-check"></i> Patient Appointments Manager</h2>
+                        <p>Manage, review, and confirm incoming online appointment requests.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-primary" id="btnOpenManualAppointment">
+                            <i class="fa-solid fa-plus"></i> Walk-In Appointment
+                        </button>
+                        <button class="btn-secondary" id="btnExportApts">
+                            <i class="fa-solid fa-file-export"></i> Export JSON
+                        </button>
+                        <button class="btn-secondary btn-save-tab" data-tab-name="appointment_section">
+                            <i class="fa-solid fa-check"></i> Save Booking Visual
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Appointment Booking Section Visual & Helpline Settings -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-calendar-days"></i> Booking Section Visual &amp; Assistance Helpline</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Assistance Hotline Phone</label>
+                            <input type="text" id="appointment_assist_phone" placeholder="+91 98765 43210">
+                            <small>Displayed prominently in appointment section</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Section Badge</label>
+                            <input type="text" id="appointment_badge" placeholder="BOOK YOUR VISIT">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading Line 1</label>
+                            <input type="text" id="appointment_title_line1" placeholder="Take the first step">
+                        </div>
+                        <div class="form-group">
+                            <label>Heading Line 2 (Accent)</label>
+                            <input type="text" id="appointment_title_line2" placeholder="towards better health.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Section Subtitle / Description</label>
+                        <input type="text" id="appointment_description" placeholder="Schedule an appointment with one of our specialists...">
+                    </div>
+                    <div class="image-manager-group" style="margin-top: 16px;">
+                        <div class="image-manager-title">
+                            <i class="fa-solid fa-image"></i> Appointment Section Consultation Banner / Photo
+                        </div>
+                        <div class="image-preview-row">
+                            <div class="image-preview-box">
+                                <img id="appointment_banner_img_preview" src="" alt="Appointment Banner Preview" style="display:none;">
+                                <div id="appointment_banner_img_placeholder" class="no-img-placeholder">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <small>Graphic</small>
+                                </div>
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-action-btns">
+                                    <label class="btn-upload-file">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Upload Banner</span>
+                                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'appointment_banner_img')">
+                                    </label>
+                                    <button type="button" class="btn-remove-img" onclick="handleImageRemove('appointment_banner_img')">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <input type="text" id="appointment_banner_img" class="image-url-input" placeholder="Banner image URL (e.g. /uploads/...)" oninput="handleImageUrlInput('appointment_banner_img')">
+                                <small>Shown alongside appointment booking section. If removed, clean illustration is used.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div style="display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 250px;">
+                            <input type="text" id="aptSearchInput" placeholder="Search by patient name or phone number..." style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);">
+                        </div>
+                        <div style="width: 200px;">
+                            <select id="aptStatusFilter" style="width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);">
+                                <option value="ALL">All Statuses</option>
+                                <option value="Pending">Pending Only</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Phone / Contact</th>
+                                    <th>Department</th>
+                                    <th>Date</th>
+                                    <th>Message / Notes</th>
+                                    <th>Received At</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allAppointmentsBody">
+                                <tr><td colspan="9" style="text-align: center; padding: 24px;">Loading appointment data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 3: BRANDING & HEADER
+            ====================================== -->
+            <section class="tab-panel" id="tab-brand">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-id-card"></i> Hospital Branding &amp; Top Bar</h2>
+                        <p>Update hospital name, contact numbers, emergency line, location, and social media handles.</p>
+                    </div>
+                    <button class="btn-primary btn-save-tab" data-tab-name="brand">
+                        <i class="fa-solid fa-check"></i> Save Branding
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-hospital"></i> Identity &amp; Name</div>
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label>Hospital Main Name</label>
+                            <input type="text" id="brand_name" placeholder="e.g. Leelavati">
+                            <small>Displayed prominently in logo and navigation</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Hospital Suffix / Type</label>
+                            <input type="text" id="brand_suffix" placeholder="e.g. Hospital">
+                            <small>Subtitle under the hospital name</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline / Motto</label>
+                            <input type="text" id="brand_tagline" placeholder="e.g. Multispecialty Healthcare">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Visual Assets (Logo & Favicon) -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-images"></i> Brand Visual Assets (Logo &amp; Favicon)</div>
+                    <div class="form-grid-2">
+                        <!-- Logo Image Manager -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-image"></i> Hospital Logo Image (Navbar &amp; Footer)
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box">
+                                    <img id="brand_logo_img_preview" src="" alt="Logo Preview" style="display:none;">
+                                    <div id="brand_logo_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-regular fa-image"></i>
+                                        <small>Text Logo</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Logo</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'brand_logo_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('brand_logo_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove Logo
+                                        </button>
+                                    </div>
+                                    <input type="text" id="brand_logo_img" class="image-url-input" placeholder="Or enter logo image URL..." oninput="handleImageUrlInput('brand_logo_img')">
+                                    <small>If removed or empty, the elegant text + icon logo is displayed.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Favicon Image Manager -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-circle-dot"></i> Browser Tab Favicon
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box">
+                                    <img id="brand_favicon_img_preview" src="" alt="Favicon Preview" style="display:none;">
+                                    <div id="brand_favicon_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-regular fa-circle-dot"></i>
+                                        <small>Default</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Favicon</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'brand_favicon_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('brand_favicon_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="brand_favicon_img" class="image-url-input" placeholder="Favicon image URL..." oninput="handleImageUrlInput('brand_favicon_img')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Announcements & Theme Customizer -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-palette"></i> Top Announcement &amp; Theme Accent Color</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <input type="checkbox" id="brand_top_announcement_enabled" style="width: auto; cursor: pointer;">
+                                <label for="brand_top_announcement_enabled" style="margin: 0; cursor: pointer;">Enable Top Announcement Banner</label>
+                            </div>
+                            <input type="text" id="brand_top_announcement_text" placeholder="e.g. Specialist Consultations Mon-Sat | Emergency: +91 98765 43210">
+                            <small>Displayed as an urgent/informative banner at the top of the website</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Primary Theme Accent Color</label>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <input type="color" id="brand_theme_color" value="#087f8c" style="width: 50px; height: 42px; padding: 2px; border-radius: 8px; cursor: pointer;">
+                                <input type="text" id="brand_theme_color_text" value="#087f8c" placeholder="#087f8c" style="max-width: 140px;" oninput="document.getElementById('brand_theme_color').value = this.value">
+                            </div>
+                            <small>Controls primary buttons, icons, highlights, and borders across the entire site</small>
+                        </div>
+                    </div>
+
+                    <!-- Announcement Icon / Visual Badge -->
+                    <div class="image-manager-group" style="margin-top: 16px;">
+                        <div class="image-manager-title">
+                            <i class="fa-solid fa-bullhorn"></i> Announcement Banner Visual / Icon Image (Optional)
+                        </div>
+                        <div class="image-preview-row">
+                            <div class="image-preview-box">
+                                <img id="brand_announcement_icon_preview" src="" alt="Announcement Preview" style="display:none;">
+                                <div id="brand_announcement_icon_placeholder" class="no-img-placeholder">
+                                    <i class="fa-solid fa-bullhorn"></i>
+                                    <small>Icon</small>
+                                </div>
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-action-btns">
+                                    <label class="btn-upload-file">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Upload Visual</span>
+                                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'brand_announcement_icon')">
+                                    </label>
+                                    <button type="button" class="btn-remove-img" onclick="handleImageRemove('brand_announcement_icon')">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <input type="text" id="brand_announcement_icon" class="image-url-input" placeholder="Icon / badge image URL..." oninput="handleImageUrlInput('brand_announcement_icon')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-phone-volume"></i> Top Bar &amp; Direct Contact</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Top Bar Location</label>
+                            <input type="text" id="brand_location" placeholder="e.g. Varanasi, India">
+                        </div>
+                        <div class="form-group">
+                            <label>Top Bar Working Hours</label>
+                            <input type="text" id="brand_hours" placeholder="e.g. Mon - Sat: 9:00 AM - 8:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label>Emergency Hotline Phone</label>
+                            <input type="text" id="brand_emergency_phone" placeholder="e.g. +91 98765 43210">
+                            <small>Highlighted in red/emergency button in top bar</small>
+                        </div>
+                        <div class="form-group">
+                            <label>General Hospital Phone</label>
+                            <input type="text" id="brand_phone" placeholder="e.g. +91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label>Official Email Address</label>
+                            <input type="email" id="brand_email" placeholder="e.g. hello@leelavatihospital.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Full Physical Address</label>
+                            <input type="text" id="brand_address" placeholder="e.g. 123 Healthcare Avenue, Varanasi, India">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-brands fa-share-nodes"></i> Social Media Links</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input type="text" id="brand_social_facebook" placeholder="https://facebook.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram URL</label>
+                            <input type="text" id="brand_social_instagram" placeholder="https://instagram.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn URL</label>
+                            <input type="text" id="brand_social_linkedin" placeholder="https://linkedin.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>YouTube URL</label>
+                            <input type="text" id="brand_social_youtube" placeholder="https://youtube.com/...">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 4: HERO SECTION
+            ====================================== -->
+            <section class="tab-panel" id="tab-hero">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Hero Section Settings</h2>
+                        <p>Customize the homepage header banner, headlines, call-to-actions, and trust statistics.</p>
+                    </div>
+                    <button class="btn-primary btn-save-tab" data-tab-name="hero">
+                        <i class="fa-solid fa-check"></i> Save Hero Section
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-heading"></i> Main Headlines &amp; Copy</div>
+                    <div class="form-group">
+                        <label>Top Pill Badge Text</label>
+                        <input type="text" id="hero_badge" placeholder="e.g. Trusted Multispecialty Healthcare">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Main Headline - Line 1</label>
+                            <input type="text" id="hero_title_line1" placeholder="e.g. Your Health.">
+                        </div>
+                        <div class="form-group">
+                            <label>Main Headline - Line 2 (Accent Teal)</label>
+                            <input type="text" id="hero_title_line2" placeholder="e.g. Our Priority.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Hero Description Subtitle</label>
+                        <textarea id="hero_description" rows="3" placeholder="Enter hero subtext..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Showcase Images Suite -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-images"></i> Hero Section Visual Assets Suite</div>
+                    <div class="form-grid-2">
+                        <!-- Hero Main Showcase Image -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-camera"></i> 1. Hero Main Visual / Photo
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box">
+                                    <img id="hero_img_preview" src="" alt="Hero Preview" style="display:none;">
+                                    <div id="hero_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                        <small>Doctor Illustration</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Hero Photo</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'hero_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('hero_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="hero_img" class="image-url-input" placeholder="Or enter image URL..." oninput="handleImageUrlInput('hero_img')">
+                                    <small>Upload clinic doctors/facility photo. If empty, CSS illustration displays.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hero Background / Pattern Visual -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-panorama"></i> 2. Hero Background Banner (Optional)
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box">
+                                    <img id="hero_bg_img_preview" src="" alt="Hero BG Preview" style="display:none;">
+                                    <div id="hero_bg_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-panorama"></i>
+                                        <small>Gradient BG</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload BG</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'hero_bg_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('hero_bg_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="hero_bg_img" class="image-url-input" placeholder="Background image URL..." oninput="handleImageUrlInput('hero_bg_img')">
+                                    <small>Subtle texture or facility background behind the hero section.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Trust Badge Avatar -->
+                        <div class="image-manager-group" style="grid-column: 1 / -1;">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-user-check"></i> 3. Floating Trust Badge Mini Avatar
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 70px; height: 70px;">
+                                    <img id="hero_trust_avatar_preview" src="" alt="Trust Preview" style="display:none;">
+                                    <div id="hero_trust_avatar_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-users"></i>
+                                        <small>Avatars</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Avatar</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'hero_trust_avatar')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('hero_trust_avatar')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="hero_trust_avatar" class="image-url-input" placeholder="Doctor/patient trust icon URL..." oninput="handleImageUrlInput('hero_trust_avatar')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-link"></i> Call-to-Action Buttons &amp; Floating Cards</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Primary Button Text</label>
+                            <input type="text" id="hero_btn_primary_text" placeholder="e.g. Book an Appointment">
+                        </div>
+                        <div class="form-group">
+                            <label>Primary Button Link</label>
+                            <input type="text" id="hero_btn_primary_link" placeholder="e.g. #appointment">
+                        </div>
+                        <div class="form-group">
+                            <label>Secondary Button Text</label>
+                            <input type="text" id="hero_btn_secondary_text" placeholder="e.g. Explore Services">
+                        </div>
+                        <div class="form-group">
+                            <label>Secondary Button Link</label>
+                            <input type="text" id="hero_btn_secondary_link" placeholder="e.g. #services">
+                        </div>
+                        <div class="form-group">
+                            <label>Trust Card Title</label>
+                            <input type="text" id="hero_trust_title" placeholder="e.g. Experienced Medical Team">
+                        </div>
+                        <div class="form-group">
+                            <label>Trust Card Subtitle</label>
+                            <input type="text" id="hero_trust_subtitle" placeholder="e.g. Dedicated to your wellbeing">
+                        </div>
+                        <div class="form-group">
+                            <label>Floating Card Rating Value</label>
+                            <input type="text" id="hero_rating_value" placeholder="e.g. 4.9/5">
+                        </div>
+                        <div class="form-group">
+                            <label>Floating Card Patients Value</label>
+                            <input type="text" id="hero_patients_value" placeholder="e.g. 10K+">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-chart-column"></i> Hero Bottom 4 Counter Stats</div>
+                    <div class="form-grid-2" id="heroStatsContainer">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 5: ABOUT SECTION
+            ====================================== -->
+            <section class="tab-panel" id="tab-about">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-circle-info"></i> About Hospital Section</h2>
+                        <p>Tell patients about your medical centre, clinical mission, experience, and key strengths.</p>
+                    </div>
+                    <button class="btn-primary btn-save-tab" data-tab-name="about">
+                        <i class="fa-solid fa-check"></i> Save About Section
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-file-lines"></i> Section Text &amp; Mission</div>
+                    <div class="form-group">
+                        <label>Section Label Badge</label>
+                        <input type="text" id="about_badge" placeholder="e.g. ABOUT LEELAVATI HOSPITAL">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Main Heading Line 1</label>
+                            <input type="text" id="about_title_line1" placeholder="e.g. Healthcare that puts">
+                        </div>
+                        <div class="form-group">
+                            <label>Main Heading Line 2 (Accent)</label>
+                            <input type="text" id="about_title_line2" placeholder="e.g. you first.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>First Paragraph</label>
+                        <textarea id="about_paragraph1" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Second Paragraph</label>
+                        <textarea id="about_paragraph2" rows="3"></textarea>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Experience Badge Stat</label>
+                            <input type="text" id="about_experience_value" placeholder="e.g. 10+">
+                        </div>
+                        <div class="form-group">
+                            <label>Experience Badge Label</label>
+                            <input type="text" id="about_experience_label" placeholder="e.g. Years of Healthcare Excellence">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Hospital Facility & Leadership Images Suite -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-images"></i> About Section Visuals &amp; Leadership Suite</div>
+                    <div class="form-grid-2">
+                        <!-- Main Facility Photo -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-hospital"></i> 1. Main Hospital Building / Facility Photo
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box">
+                                    <img id="about_img_preview" src="" alt="About Preview" style="display:none;">
+                                    <div id="about_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-hospital"></i>
+                                        <small>Building Icon</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Photo</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'about_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('about_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="about_img" class="image-url-input" placeholder="Building photo URL..." oninput="handleImageUrlInput('about_img')">
+                                    <small>Upload actual hospital photo. If removed, building graphic displays.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical Director / Founder Photo -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-user-tie"></i> 2. Medical Director / Founder Portrait
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box">
+                                    <img id="about_director_img_preview" src="" alt="Director Preview" style="display:none;">
+                                    <div id="about_director_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                        <small>Director</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Photo</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'about_director_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('about_director_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="about_director_img" class="image-url-input" placeholder="Director portrait URL..." oninput="handleImageUrlInput('about_director_img')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quality Certification / NABH Badge -->
+                        <div class="image-manager-group" style="grid-column: 1 / -1;">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-award"></i> 3. Quality Certification / Accreditation Badge (NABH / ISO)
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 70px; height: 70px;">
+                                    <img id="about_badge_img_preview" src="" alt="Badge Preview" style="display:none;">
+                                    <div id="about_badge_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-certificate"></i>
+                                        <small>Badge</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Badge</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'about_badge_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('about_badge_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="about_badge_img" class="image-url-input" placeholder="Accreditation badge URL..." oninput="handleImageUrlInput('about_badge_img')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-list-check"></i> 3 Key Feature Points</div>
+                    <div id="aboutFeaturesContainer">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 6: SERVICES & SPECIALTIES
+            ====================================== -->
+            <section class="tab-panel" id="tab-services">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-stethoscope"></i> Services &amp; Specialties</h2>
+                        <p>Add, edit, or remove medical departments and service offerings shown on the website.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-primary" id="btnAddServiceModal">
+                            <i class="fa-solid fa-plus"></i> Add New Specialty
+                        </button>
+                        <button class="btn-secondary btn-save-tab" data-tab-name="services">
+                            <i class="fa-solid fa-check"></i> Save Headers
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-heading"></i> Services Section Header</div>
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label>Badge</label>
+                            <input type="text" id="services_badge" placeholder="e.g. OUR SPECIALTIES">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 1</label>
+                            <input type="text" id="services_title_line1" placeholder="e.g. Comprehensive care,">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 2 (Accent)</label>
+                            <input type="text" id="services_title_line2" placeholder="e.g. under one roof.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="services_description" rows="2"></textarea>
+                    </div>
+
+                    <!-- Services Section Banner Visual -->
+                    <div class="image-manager-group" style="margin-top: 16px;">
+                        <div class="image-manager-title">
+                            <i class="fa-solid fa-panorama"></i> Services Section Header Banner Visual (Optional)
+                        </div>
+                        <div class="image-preview-row">
+                            <div class="image-preview-box">
+                                <img id="services_banner_img_preview" src="" alt="Services Banner Preview" style="display:none;">
+                                <div id="services_banner_img_placeholder" class="no-img-placeholder">
+                                    <i class="fa-solid fa-stethoscope"></i>
+                                    <small>Specialties</small>
+                                </div>
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-action-btns">
+                                    <label class="btn-upload-file">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Upload Banner</span>
+                                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'services_banner_img')">
+                                    </label>
+                                    <button type="button" class="btn-remove-img" onclick="handleImageRemove('services_banner_img')">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <input type="text" id="services_banner_img" class="image-url-input" placeholder="Banner image URL..." oninput="handleImageUrlInput('services_banner_img')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-items-grid" id="servicesGrid">
+                    <!-- Dynamic services cards rendered here -->
+                </div>
+
+                <!-- Appointment Booking Departments Options -->
+                <div class="admin-card" style="margin-top: 28px;">
+                    <div class="card-title"><i class="fa-solid fa-list-check"></i> Booking Form Department Options</div>
+                    <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">
+                        Manage the department choices displayed in the public online appointment form dropdown.
+                    </p>
+                    <div class="tag-list-box" id="departmentsListContainer">
+                        <!-- Rendered dynamically -->
+                    </div>
+                    <div style="display: flex; gap: 10px; max-width: 450px;">
+                        <input type="text" id="newDepartmentInput" placeholder="New Department (e.g. Neurology, Oncology)" style="flex:1;">
+                        <button type="button" class="btn-primary" id="btnAddDepartment">
+                            <i class="fa-solid fa-plus"></i> Add
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 7: WHY CHOOSE US
+            ====================================== -->
+            <section class="tab-panel" id="tab-why">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-heart-pulse"></i> Why Choose Us Section</h2>
+                        <p>Highlight your clinic's patient safety, hygiene, specialized equipment, and benefits.</p>
+                    </div>
+                    <button class="btn-primary btn-save-tab" data-tab-name="why_us">
+                        <i class="fa-solid fa-check"></i> Save Why Choose Us
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-file-pen"></i> Section Header &amp; Highlights</div>
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label>Badge</label>
+                            <input type="text" id="why_badge" placeholder="e.g. WHY LEELAVATI HOSPITAL">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 1</label>
+                            <input type="text" id="why_title_line1" placeholder="e.g. Care designed around">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 2 (Accent)</label>
+                            <input type="text" id="why_title_line2" placeholder="e.g. your needs.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="why_description" rows="2"></textarea>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Happy Patients Count</label>
+                            <input type="text" id="why_happy_patients_value" placeholder="e.g. 10K+">
+                        </div>
+                        <div class="form-group">
+                            <label>Quality Card Title</label>
+                            <input type="text" id="why_quality_title" placeholder="e.g. Quality Healthcare">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Why Us Visual Showcase & Award Badge Suite -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-images"></i> Why Choose Us Visual Assets Suite</div>
+                    <div class="form-grid-2">
+                        <!-- Main Showcase Visual -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-heart-pulse"></i> 1. Custom Why Us Graphic / Photo
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 120px; height: 120px;">
+                                    <img id="why_img_preview" src="" alt="Why Preview" style="display:none;">
+                                    <div id="why_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-heart-pulse"></i>
+                                        <small>Graphic Box</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Visual</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'why_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('why_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="why_img" class="image-url-input" placeholder="Or enter image URL..." oninput="handleImageUrlInput('why_img')">
+                                    <small>Upload a custom clinic care visual. If empty, the interactive card is displayed.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quality Certification Badge -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-certificate"></i> 2. Quality &amp; Patient Safety Badge
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 120px; height: 120px;">
+                                    <img id="why_award_img_preview" src="" alt="Award Preview" style="display:none;">
+                                    <div id="why_award_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <small>Safety Badge</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Badge</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'why_award_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('why_award_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="why_award_img" class="image-url-input" placeholder="Safety certificate / award URL..." oninput="handleImageUrlInput('why_award_img')">
+                                    <small>NABH, ISO, or clinical excellence badge shown with features.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-shield-virus"></i> Why Us Feature Items</div>
+                    <div id="whyItemsContainer">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 8: DOCTORS TEAM
+            ====================================== -->
+            <section class="tab-panel" id="tab-doctors">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-user-doctor"></i> Medical Doctors Team</h2>
+                        <p>Manage doctor profiles, qualifications, experience, specialties, and ratings.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-primary" id="btnAddDoctorModal">
+                            <i class="fa-solid fa-user-plus"></i> Add Doctor
+                        </button>
+                        <button class="btn-secondary btn-save-tab" data-tab-name="doctors">
+                            <i class="fa-solid fa-check"></i> Save Headers
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-heading"></i> Doctors Section Header</div>
+                    <div class="form-grid-3">
+                        <div class="form-group">
+                            <label>Badge</label>
+                            <input type="text" id="doctors_badge" placeholder="e.g. OUR DOCTORS">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 1</label>
+                            <input type="text" id="doctors_title_line1" placeholder="e.g. Meet our medical">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 2 (Accent)</label>
+                            <input type="text" id="doctors_title_line2" placeholder="e.g. experts.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="doctors_description" rows="2"></textarea>
+                    </div>
+
+                    <!-- Doctors Section Group Visual Banner -->
+                    <div class="image-manager-group" style="margin-top: 16px;">
+                        <div class="image-manager-title">
+                            <i class="fa-solid fa-users-viewfinder"></i> Doctors Section Group Visual / Background Banner (Optional)
+                        </div>
+                        <div class="image-preview-row">
+                            <div class="image-preview-box">
+                                <img id="doctors_banner_img_preview" src="" alt="Doctors Banner Preview" style="display:none;">
+                                <div id="doctors_banner_img_placeholder" class="no-img-placeholder">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    <small>Team Banner</small>
+                                </div>
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-action-btns">
+                                    <label class="btn-upload-file">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Upload Banner</span>
+                                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'doctors_banner_img')">
+                                    </label>
+                                    <button type="button" class="btn-remove-img" onclick="handleImageRemove('doctors_banner_img')">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <input type="text" id="doctors_banner_img" class="image-url-input" placeholder="Doctors group banner image URL..." oninput="handleImageUrlInput('doctors_banner_img')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-items-grid" id="doctorsGrid">
+                    <!-- Rendered dynamically -->
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 9: PATIENT TESTIMONIALS
+            ====================================== -->
+            <section class="tab-panel" id="tab-testimonials">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-comment-dots"></i> Patient Testimonials &amp; Reviews</h2>
+                        <p>Manage patient stories, quotes, ratings, and feedback displayed in the carousel.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-primary" id="btnAddTestimonialModal">
+                            <i class="fa-solid fa-plus"></i> Add Testimonial
+                        </button>
+                        <button class="btn-secondary btn-save-tab" data-tab-name="testimonials">
+                            <i class="fa-solid fa-check"></i> Save Headers
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-heading"></i> Testimonials Header</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Badge</label>
+                            <input type="text" id="testimonials_badge" placeholder="e.g. PATIENT STORIES">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 1</label>
+                            <input type="text" id="testimonials_title_line1" placeholder="e.g. Trusted by families,">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 2 (Accent)</label>
+                            <input type="text" id="testimonials_title_line2" placeholder="e.g. every day.">
+                        </div>
+                    </div>
+
+                    <!-- Testimonials Visual Accent Banner -->
+                    <div class="image-manager-group" style="margin-top: 16px;">
+                        <div class="image-manager-title">
+                            <i class="fa-solid fa-quote-left"></i> Testimonials Section Accent / Background Visual (Optional)
+                        </div>
+                        <div class="image-preview-row">
+                            <div class="image-preview-box">
+                                <img id="testimonials_banner_img_preview" src="" alt="Testimonials Banner Preview" style="display:none;">
+                                <div id="testimonials_banner_img_placeholder" class="no-img-placeholder">
+                                    <i class="fa-solid fa-comment-dots"></i>
+                                    <small>Reviews</small>
+                                </div>
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-action-btns">
+                                    <label class="btn-upload-file">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Upload Visual</span>
+                                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'testimonials_banner_img')">
+                                    </label>
+                                    <button type="button" class="btn-remove-img" onclick="handleImageRemove('testimonials_banner_img')">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <input type="text" id="testimonials_banner_img" class="image-url-input" placeholder="Accent visual image URL..." oninput="handleImageUrlInput('testimonials_banner_img')">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-items-grid" id="testimonialsGrid">
+                    <!-- Rendered dynamically -->
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 10: CONTACT & FOOTER
+            ====================================== -->
+            <section class="tab-panel" id="tab-contact">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-location-dot"></i> Contact Information &amp; Footer</h2>
+                        <p>Manage contact info, working hours, directions, final CTA banner, and footer copyright.</p>
+                    </div>
+                    <button class="btn-primary btn-save-tab" data-tab-name="contact">
+                        <i class="fa-solid fa-check"></i> Save Contact &amp; Footer
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-envelope-open-text"></i> Contact Section Content</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Section Badge</label>
+                            <input type="text" id="contact_badge" placeholder="e.g. CONTACT US">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 1</label>
+                            <input type="text" id="contact_title_line1" placeholder="e.g. We're here when">
+                        </div>
+                        <div class="form-group">
+                            <label>Title Line 2 (Accent)</label>
+                            <input type="text" id="contact_title_line2" placeholder="e.g. you need us.">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="contact_description" placeholder="Description...">
+                        </div>
+                        <div class="form-group">
+                            <label>Address Full Text</label>
+                            <input type="text" id="contact_address_text" placeholder="123 Healthcare Avenue, Varanasi, India">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Phone</label>
+                            <input type="text" id="contact_phone" placeholder="+91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Email</label>
+                            <input type="text" id="contact_email" placeholder="hello@leelavatihospital.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Weekday Working Hours</label>
+                            <input type="text" id="contact_hours_line1" placeholder="Mon - Sat: 9:00 AM - 8:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label>Sunday / Weekend Hours</label>
+                            <input type="text" id="contact_hours_line2" placeholder="Sunday: 10:00 AM - 2:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label>Map Location Label</label>
+                            <input type="text" id="contact_map_subtitle" placeholder="Varanasi, India">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact & Footer Visual Assets Suite -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-images"></i> Contact &amp; Footer Visual Assets Suite</div>
+                    <div class="form-grid-2">
+                        <!-- 1. Map / Exterior Location Visual -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-map-location-dot"></i> 1. Map Box / Hospital Exterior Visual
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 120px; height: 120px;">
+                                    <img id="contact_img_preview" src="" alt="Contact Preview" style="display:none;">
+                                    <div id="contact_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-map-pin"></i>
+                                        <small>Graphic Map</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Map/Photo</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'contact_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('contact_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="contact_img" class="image-url-input" placeholder="Or enter image URL..." oninput="handleImageUrlInput('contact_img')">
+                                    <small>Google Maps snapshot or clinic exterior photo.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Hospital Reception Photo -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-door-open"></i> 2. Reception / Emergency Entrance Visual
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 120px; height: 120px;">
+                                    <img id="contact_reception_img_preview" src="" alt="Reception Preview" style="display:none;">
+                                    <div id="contact_reception_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-hospital-user"></i>
+                                        <small>Reception</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Photo</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'contact_reception_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('contact_reception_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="contact_reception_img" class="image-url-input" placeholder="Reception photo URL..." oninput="handleImageUrlInput('contact_reception_img')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. UPI / WhatsApp QR Code -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-qrcode"></i> 3. Official Payment UPI / WhatsApp Support QR Code
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 100px; height: 100px;">
+                                    <img id="contact_qr_img_preview" src="" alt="QR Preview" style="display:none;">
+                                    <div id="contact_qr_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-qrcode"></i>
+                                        <small>QR Code</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload QR</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'contact_qr_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('contact_qr_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="contact_qr_img" class="image-url-input" placeholder="QR code image URL..." oninput="handleImageUrlInput('contact_qr_img')">
+                                    <small>Patients can scan to pay fees or chat directly with reception.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Footer Accreditation & Partner Badges -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-shield-cat"></i> 4. Footer Accreditation &amp; Partner Logos Strip
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 100px; height: 100px;">
+                                    <img id="footer_accreditation_img_preview" src="" alt="Accreditation Preview" style="display:none;">
+                                    <div id="footer_accreditation_img_placeholder" class="no-img-placeholder">
+                                        <i class="fa-solid fa-award"></i>
+                                        <small>Partners</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Logos</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'footer_accreditation_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('footer_accreditation_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="footer_accreditation_img" class="image-url-input" placeholder="Partner logos strip URL..." oninput="handleImageUrlInput('footer_accreditation_img')">
+                                    <small>NABH / Insurance TPA / Healthcare partner logos strip.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-bullhorn"></i> Final Call to Action (CTA Banner)</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Subtitle / Pre-heading</label>
+                            <input type="text" id="cta_subtitle" placeholder="e.g. Your health deserves the best care.">
+                        </div>
+                        <div class="form-group">
+                            <label>Main Heading</label>
+                            <input type="text" id="cta_heading" placeholder="e.g. Start your journey to better health today.">
+                        </div>
+                        <div class="form-group">
+                            <label>Button Text</label>
+                            <input type="text" id="cta_button_text" placeholder="e.g. Book an Appointment">
+                        </div>
+                        <div class="form-group">
+                            <label>Button Link</label>
+                            <input type="text" id="cta_button_link" placeholder="e.g. #appointment">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-shoe-prints"></i> Footer Branding &amp; Copyright</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Footer Brand Summary</label>
+                            <input type="text" id="footer_brand_description" placeholder="Comprehensive healthcare with compassion...">
+                        </div>
+                        <div class="form-group">
+                            <label>Copyright Text</label>
+                            <input type="text" id="footer_copyright_text" placeholder="Leelavati Hospital. All rights reserved.">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =====================================
+                 TAB 11: .ENV & SECURITY
+            ====================================== -->
+            <section class="tab-panel" id="tab-security">
+                <div class="panel-header">
+                    <div>
+                        <h2><i class="fa-solid fa-shield-halved"></i> .env Authentication &amp; Admin Security</h2>
+                        <p>Credentials are dynamically loaded from your root <code style="background:var(--primary-light); color:var(--primary-dark); padding:2px 6px; border-radius:4px;">.env</code> file.</p>
+                    </div>
+                </div>
+
+                <div class="env-status-banner">
+                    <div>
+                        <h3><i class="fa-solid fa-key"></i> Environment-Based Recovery Guarantee</h3>
+                        <p>
+                            As configured, your admin username and password reside directly in the <strong>.env</strong> file. If you ever forget your password, you will NEVER be locked out: simply open the <strong>.env</strong> file in Notepad on your computer, view or change <code style="color:#00e0ef;">ADMIN_PASSWORD=your_new_password</code>, save the file, and you can log in immediately!
+                        </p>
+                    </div>
+                    <div>
+                        <span class="env-file-badge">.env File Active</span>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-user-shield"></i> Update Admin Credentials (Direct .env Write)</div>
+                    <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
+                        You can update your credentials right here from this panel, or manually inside the <code style="background:#f1f5f9; padding:2px 6px; border-radius:4px;">.env</code> file. Changes take effect instantly!
+                    </p>
+
+                    <form id="updateEnvForm" style="max-width: 500px;">
+                        <div class="form-group">
+                            <label for="envUsername">Admin Username</label>
+                            <input type="text" id="envUsername" required>
+                            <small>Saved directly to ADMIN_USERNAME in .env</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="envPassword">Admin Password</label>
+                            <div style="position: relative;">
+                                <input type="password" id="envPassword" required>
+                                <button type="button" id="toggleEnvPass" style="position: absolute; right: 12px; top: 12px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;">
+                                    <i class="fa-regular fa-eye" id="envEyeIcon"></i>
+                                </button>
+                            </div>
+                            <small>Saved directly to ADMIN_PASSWORD in .env</small>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="btnUpdateEnv">
+                            <i class="fa-solid fa-floppy-disk"></i> Save New Credentials to .env
+                        </button>
+                    </form>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-magnifying-glass"></i> SEO &amp; Meta Search Settings</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Browser Page Title</label>
+                            <input type="text" id="seo_meta_title" placeholder="e.g. Leelavati Hospital | Multispecialty Healthcare">
+                        </div>
+                        <div class="form-group">
+                            <label>Search Keywords</label>
+                            <input type="text" id="seo_meta_keywords" placeholder="e.g. hospital, clinic, doctor, varanasi">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Meta Description</label>
+                        <textarea id="seo_meta_description" rows="2" placeholder="Search snippet description..."></textarea>
+                    </div>
+
+                    <!-- OpenGraph Social Share Preview Image -->
+                    <div class="image-manager-group" style="margin-top: 16px;">
+                        <div class="image-manager-title">
+                            <i class="fa-solid fa-share-nodes"></i> Social Share Preview Graphic (WhatsApp / Facebook / Twitter OG Image)
+                        </div>
+                        <div class="image-preview-row">
+                            <div class="image-preview-box" style="width: 140px; height: 80px;">
+                                <img id="seo_og_img_preview" src="" alt="Social Share Preview" style="display:none;">
+                                <div id="seo_og_img_placeholder" class="no-img-placeholder">
+                                    <i class="fa-solid fa-share-nodes"></i>
+                                    <small>1200 x 630</small>
+                                </div>
+                            </div>
+                            <div class="image-controls">
+                                <div class="image-action-btns">
+                                    <label class="btn-upload-file">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        <span>Upload Share Image</span>
+                                        <input type="file" accept="image/*" onchange="handleImageUpload(this, 'seo_og_img')">
+                                    </label>
+                                    <button type="button" class="btn-remove-img" onclick="handleImageRemove('seo_og_img')">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <input type="text" id="seo_og_img" class="image-url-input" placeholder="Social share image URL..." oninput="handleImageUrlInput('seo_og_img')">
+                                <small>Shown when patients share hospital website links on WhatsApp, Facebook, iMessage, or Twitter.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Profile Avatar & Maintenance Mode -->
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-user-gear"></i> Admin Profile &amp; Maintenance Mode</div>
+                    <div class="form-grid-2">
+                        <!-- Admin Avatar Image Manager -->
+                        <div class="image-manager-group">
+                            <div class="image-manager-title">
+                                <i class="fa-solid fa-user-astronaut"></i> Administrator Profile Avatar
+                            </div>
+                            <div class="image-preview-row">
+                                <div class="image-preview-box" style="width: 80px; height: 80px; border-radius: 50%;">
+                                    <img id="admin_avatar_img_preview" src="" alt="Admin Preview" style="display:none; border-radius:50%;">
+                                    <div id="admin_avatar_img_placeholder" class="no-img-placeholder" style="border-radius:50%;">
+                                        <i class="fa-solid fa-user-shield"></i>
+                                        <small>Admin</small>
+                                    </div>
+                                </div>
+                                <div class="image-controls">
+                                    <div class="image-action-btns">
+                                        <label class="btn-upload-file">
+                                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                                            <span>Upload Avatar</span>
+                                            <input type="file" accept="image/*" onchange="handleImageUpload(this, 'admin_avatar_img')">
+                                        </label>
+                                        <button type="button" class="btn-remove-img" onclick="handleImageRemove('admin_avatar_img')">
+                                            <i class="fa-solid fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <input type="text" id="admin_avatar_img" class="image-url-input" placeholder="Admin avatar image URL..." oninput="handleImageUrlInput('admin_avatar_img')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Maintenance Mode Switch -->
+                        <div style="background: #f8fafc; border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px;">
+                            <h4 style="font-size: 14px; color: var(--navy); margin-bottom: 8px;">
+                                <i class="fa-solid fa-triangle-exclamation" style="color: var(--warning);"></i> Site Maintenance Banner Mode
+                            </h4>
+                            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px;">
+                                Display an emergency maintenance / holiday notice banner to visitors.
+                            </p>
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600;">
+                                <input type="checkbox" id="maintenance_mode_toggle" style="width: auto; cursor: pointer;">
+                                <span>Enable Maintenance Alert Notice</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="card-title"><i class="fa-solid fa-rotate-left"></i> Restore Site Defaults</div>
+                    <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+                        Reset all website content back to the original Leelavati Hospital default copy.
+                    </p>
+                    <button class="btn-danger" id="btnResetDefaults">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Reset Website Content to Defaults
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- =====================================
+         MODAL: SERVICE (ADD/EDIT)
+    ====================================== -->
+    <div class="modal-backdrop" id="serviceModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="serviceModalTitle">Add New Specialty</h3>
+                <button class="btn-close-modal" onclick="closeModal('serviceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="serviceModalId">
+                <div class="form-group">
+                    <label>Specialty Name / Title</label>
+                    <input type="text" id="serviceModalTitleInput" placeholder="e.g. Cardiology" required>
+                </div>
+                <div class="form-group">
+                    <label>FontAwesome Icon Class</label>
+                    <input type="text" id="serviceModalIconInput" placeholder="e.g. fa-solid fa-heart-pulse" required>
+                    <small>Try: fa-solid fa-stethoscope, fa-solid fa-bone, fa-solid fa-tooth, fa-solid fa-eye</small>
+                </div>
+
+                <!-- Service Image Manager -->
+                <div class="image-manager-group">
+                    <div class="image-manager-title">
+                        <i class="fa-solid fa-image"></i> Specialty Custom Image (Optional)
+                    </div>
+                    <div class="image-preview-row">
+                        <div class="image-preview-box">
+                            <img id="serviceModalImg_preview" src="" alt="Service Preview" style="display:none;">
+                            <div id="serviceModalImg_placeholder" class="no-img-placeholder">
+                                <i class="fa-solid fa-stethoscope"></i>
+                                <small>Icon Only</small>
+                            </div>
+                        </div>
+                        <div class="image-controls">
+                            <div class="image-action-btns">
+                                <label class="btn-upload-file">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>Upload Image</span>
+                                    <input type="file" accept="image/*" onchange="handleImageUpload(this, 'serviceModalImg')">
+                                </label>
+                                <button type="button" class="btn-remove-img" onclick="handleImageRemove('serviceModalImg')">
+                                    <i class="fa-solid fa-trash"></i> Remove
+                                </button>
+                            </div>
+                            <input type="text" id="serviceModalImg" class="image-url-input" placeholder="Image URL (e.g. /uploads/...)" oninput="handleImageUrlInput('serviceModalImg')">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Service Description</label>
+                    <textarea id="serviceModalDescInput" rows="3" placeholder="Description of care offered..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Button Link</label>
+                    <input type="text" id="serviceModalLinkInput" value="#appointment">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('serviceModal')">Cancel</button>
+                <button class="btn-primary" id="btnSaveServiceModal">Save Specialty</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================
+         MODAL: DOCTOR (ADD/EDIT)
+    ====================================== -->
+    <div class="modal-backdrop" id="doctorModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="doctorModalTitle">Add Medical Doctor</h3>
+                <button class="btn-close-modal" onclick="closeModal('doctorModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="doctorModalId">
+                <div class="form-group">
+                    <label>Doctor Full Name</label>
+                    <input type="text" id="doctorModalNameInput" placeholder="e.g. Dr. Ramesh Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label>Department / Specialty</label>
+                    <input type="text" id="doctorModalSpecialtyInput" placeholder="e.g. Cardiology" required>
+                </div>
+                <div class="form-group">
+                    <label>Qualifications &amp; Degrees</label>
+                    <input type="text" id="doctorModalQualInput" placeholder="e.g. MBBS, MD — Cardiologist" required>
+                </div>
+
+                <!-- Doctor Photo Image Manager -->
+                <div class="image-manager-group">
+                    <div class="image-manager-title">
+                        <i class="fa-solid fa-user-doctor"></i> Doctor Profile Photo
+                    </div>
+                    <div class="image-preview-row">
+                        <div class="image-preview-box">
+                            <img id="doctorModalImg_preview" src="" alt="Doctor Preview" style="display:none;">
+                            <div id="doctorModalImg_placeholder" class="no-img-placeholder">
+                                <i class="fa-solid fa-user-doctor"></i>
+                                <small>Placeholder</small>
+                            </div>
+                        </div>
+                        <div class="image-controls">
+                            <div class="image-action-btns">
+                                <label class="btn-upload-file">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>Upload Photo</span>
+                                    <input type="file" accept="image/*" onchange="handleImageUpload(this, 'doctorModalImg')">
+                                </label>
+                                <button type="button" class="btn-remove-img" onclick="handleImageRemove('doctorModalImg')">
+                                    <i class="fa-solid fa-trash"></i> Remove Photo
+                                </button>
+                            </div>
+                            <input type="text" id="doctorModalImg" class="image-url-input" placeholder="Photo URL (e.g. /uploads/...)" oninput="handleImageUrlInput('doctorModalImg')">
+                            <small>Upload a clear portrait of the doctor. If removed, the clean medical silhouette is shown.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Years of Experience</label>
+                        <input type="text" id="doctorModalExpInput" placeholder="e.g. 12+ Years" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating (e.g. 4.9)</label>
+                        <input type="text" id="doctorModalRatingInput" placeholder="e.g. 4.9" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('doctorModal')">Cancel</button>
+                <button class="btn-primary" id="btnSaveDoctorModal">Save Doctor Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================
+         MODAL: TESTIMONIAL (ADD/EDIT)
+    ====================================== -->
+    <div class="modal-backdrop" id="testimonialModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="testimonialModalTitle">Add Patient Review</h3>
+                <button class="btn-close-modal" onclick="closeModal('testimonialModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="testimonialModalId">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Patient Name</label>
+                        <input type="text" id="testModalNameInput" placeholder="e.g. Anita Sharma" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Avatar Letters</label>
+                        <input type="text" id="testModalAvatarInput" placeholder="e.g. AS" maxlength="3" required>
+                    </div>
+                </div>
+
+                <!-- Testimonial Patient Photo Manager -->
+                <div class="image-manager-group">
+                    <div class="image-manager-title">
+                        <i class="fa-solid fa-user"></i> Patient Avatar Photo (Optional)
+                    </div>
+                    <div class="image-preview-row">
+                        <div class="image-preview-box">
+                            <img id="testModalImg_preview" src="" alt="Avatar Preview" style="display:none;">
+                            <div id="testModalImg_placeholder" class="no-img-placeholder">
+                                <i class="fa-solid fa-user"></i>
+                                <small>Initials</small>
+                            </div>
+                        </div>
+                        <div class="image-controls">
+                            <div class="image-action-btns">
+                                <label class="btn-upload-file">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <span>Upload Photo</span>
+                                    <input type="file" accept="image/*" onchange="handleImageUpload(this, 'testModalImg')">
+                                </label>
+                                <button type="button" class="btn-remove-img" onclick="handleImageRemove('testModalImg')">
+                                    <i class="fa-solid fa-trash"></i> Remove Photo
+                                </button>
+                            </div>
+                            <input type="text" id="testModalImg" class="image-url-input" placeholder="Photo URL (e.g. /uploads/...)" oninput="handleImageUrlInput('testModalImg')">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Patient Role / Tag</label>
+                        <input type="text" id="testModalRoleInput" value="Patient" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Star Rating (1 - 5)</label>
+                        <select id="testModalRatingInput">
+                            <option value="5">★★★★★ (5 Stars)</option>
+                            <option value="4">★★★★☆ (4 Stars)</option>
+                            <option value="3">★★★☆☆ (3 Stars)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Review Quote</label>
+                    <textarea id="testModalQuoteInput" rows="3" placeholder="Enter patient experience feedback..." required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('testimonialModal')">Cancel</button>
+                <button class="btn-primary" id="btnSaveTestimonialModal">Save Testimonial</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================
+         MODAL: MANUAL APPOINTMENT (WALK-IN)
+    ====================================== -->
+    <div class="modal-backdrop" id="manualAppointmentModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-calendar-plus"></i> Register Walk-In Patient Appointment</h3>
+                <button class="btn-close-modal" onclick="closeModal('manualAppointmentModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Patient Full Name</label>
+                        <input type="text" id="manualAptName" placeholder="e.g. Ramesh Chandra" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="manualAptPhone" placeholder="e.g. +91 98765 43210" required>
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Email Address (Optional)</label>
+                        <input type="email" id="manualAptEmail" placeholder="patient@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Department / Specialty</label>
+                        <select id="manualAptDepartment" required>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Appointment Date</label>
+                        <input type="date" id="manualAptDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Status</label>
+                        <select id="manualAptStatus">
+                            <option value="Confirmed" selected>Confirmed</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Symptoms / Clinical Notes</label>
+                    <textarea id="manualAptNotes" rows="3" placeholder="Reason for visit, vitals, or referral info..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('manualAppointmentModal')">Cancel</button>
+                <button class="btn-primary" id="btnSaveManualApt">Save Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Admin JS -->
+    <script src="admin.js"></script>
+</body>
+</html>

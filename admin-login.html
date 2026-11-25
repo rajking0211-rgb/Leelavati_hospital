@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal Login | Leelavati Hospital</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --primary: #087f8c;
+            --primary-dark: #05616b;
+            --primary-light: #e8f7f8;
+            --navy: #102f3d;
+            --dark: #102a36;
+            --text: #52636b;
+            --muted: #829098;
+            --border: #dce8eb;
+            --white: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 25px 60px rgba(16, 47, 61, 0.16);
+            --radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #0e2936 0%, #102f3d 40%, #087f8c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--dark);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative Background Elements */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(8, 127, 140, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+            filter: blur(40px);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .bg-circle-1 {
+            width: 450px;
+            height: 450px;
+            top: -100px;
+            right: -100px;
+        }
+        .bg-circle-2 {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .login-card {
+            position: relative;
+            z-index: 10;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px;
+            padding: 44px 38px;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 28px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(8, 127, 140, 0.35);
+            margin-bottom: 18px;
+        }
+
+        .login-header h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-header p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrap i.field-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--muted);
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .input-wrap input {
+            width: 100%;
+            height: 52px;
+            padding: 0 45px 0 46px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--dark);
+            background: #fbfdfe;
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .input-wrap input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(8, 127, 140, 0.12);
+        }
+
+        .input-wrap input:focus ~ i.field-icon {
+            color: var(--primary);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 6px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: var(--dark);
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 52px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(8, 127, 140, 0.3);
+            margin-top: 26px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(8, 127, 140, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .alert-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.4;
+        }
+
+        .alert-error {
+            background: #ffebe9;
+            color: #d1242f;
+            border: 1px solid #ffd1cd;
+        }
+
+        .alert-success {
+            background: #e6f6ee;
+            color: #0d8a43;
+            border: 1px solid #c2ebd5;
+        }
+
+        .env-hint-box {
+            margin-top: 26px;
+            padding: 14px 16px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            border: 1px dashed rgba(8, 127, 140, 0.4);
+            font-size: 12.5px;
+            color: var(--navy);
+            line-height: 1.5;
+        }
+
+        .env-hint-box strong {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .env-code {
+            background: #ffffff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--navy);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-circle bg-circle-1"></div>
+    <div class="bg-circle bg-circle-2"></div>
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo-badge">
+                <i class="fa-solid fa-hospital-user"></i>
+            </div>
+            <h1>Admin Control Panel</h1>
+            <p>Leelavati Hospital Management Portal</p>
+        </div>
+
+        <div id="alertBox" class="alert-box">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span id="alertMsg"></span>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Admin Username</label>
+                <div class="input-wrap">
+                    <input type="text" id="username" placeholder="e.g. admin" required autocomplete="username">
+                    <i class="fa-regular fa-user field-icon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Admin Password</label>
+                <div class="input-wrap">
+                    <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                    <i class="fa-solid fa-lock field-icon"></i>
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                        <i class="fa-regular fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span>Sign In to Admin Panel</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="env-hint-box">
+            <strong><i class="fa-solid fa-shield-halved"></i> Environment Variable Based Auth</strong>
+            Admin credentials are configured inside the <span class="env-code">.env</span> file. If you ever forget your login details, you can simply open <span class="env-code">.env</span> in Notepad to see or update them!
+        </div>
+
+        <a href="/" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Return to Main Website
+        </a>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const alertBox = document.getElementById('alertBox');
+        const alertMsg = document.getElementById('alertMsg');
+        const submitBtn = document.getElementById('submitBtn');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            toggleIcon.classList.toggle('fa-eye', !isPassword);
+            toggleIcon.classList.toggle('fa-eye-slash', isPassword);
+        });
+
+        function showAlert(message, isSuccess = false) {
+            alertBox.className = 'alert-box ' + (isSuccess ? 'alert-success' : 'alert-error');
+            alertBox.style.display = 'flex';
+            alertMsg.textContent = message;
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!username || !password) {
+                showAlert('Please enter both username and password.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...';
+
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    showAlert('Success! Redirecting to dashboard...', true);
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/admin';
+                    }, 500);
+                } else {
+                    showAlert(data.error || 'Authentication failed. Please verify credentials in .env.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>Sign In to Admin Panel</span> <i class="fa-solid fa-arrow-right"></i>';
+                }
+            } catch (err) {
+                showAlert('Connection error. Is the backend server running?');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Sign In to Admin Panel</span> <i class="fa-solid fa-arrow-right"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
