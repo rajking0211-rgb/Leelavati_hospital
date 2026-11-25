@@ -1,5 +1,22 @@
+# Environment and secrets
 .env
-__pycache__/
-*.pyc
+.env.*
+
+!.env.example
+
+# Private application data
 data/
 uploads/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.venv/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
