@@ -19,27 +19,6 @@ python app.py
 
 ---
 
-## 🔑 Admin Credentials & .env Configuration
-
-Admin authentication is configured directly in the **`.env`** file located in the root project directory:
-
-```env
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=admin123
-PORT=5000
-SECRET_KEY=leelavati_hospital_secret_key_2026_secured
-```
-
-### 💡 Forgot Your Credentials? (Zero Lockout Guarantee)
-If the administrator ever forgets their username or password:
-1. Open the **`.env`** file on your computer using Notepad (or any text editor).
-2. Look at or update `ADMIN_USERNAME=` or `ADMIN_PASSWORD=`.
-3. Save the file.
-4. Log in immediately! The backend re-reads `.env` dynamically on every login attempt so **no server restart is required**.
-5. You can also view or update the username and password directly from the **`.env & Security`** tab inside the Admin Dashboard.
-
----
-
 ## 🖼️ Image Management in Every Single Tab (Change, Upload, Remove, Update)
 
 Every single section and tab has full, live visual management with 4 dedicated actions:
